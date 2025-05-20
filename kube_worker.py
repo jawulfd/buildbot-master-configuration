@@ -2,7 +2,7 @@ from buildbot.plugins import worker
 
 class KubeCustomWorker(worker.KubeLatentWorker):
     def createEnvironment(self, props):
-        super().createEnvironment(props)
+        return super().createEnvironment(props)
 
     def get_build_container_volume_mounts(self, props):
         return [
