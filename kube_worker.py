@@ -27,6 +27,7 @@ class KubeCustomWorker(worker.KubeLatentWorker):
                 "image": "docker:28.1-dind",
                 "env": [{"name": "DOCKER_TLS_CERTDIR", "value": ""}],
                 "args": ["--ip6tables=false"],
-                "volumeMounts": (yield self.get_build_container_volume_mounts(props))
+                "volumeMounts": (yield self.get_build_container_volume_mounts(props)),
+                "securityContext": {"allowPrivilegeEscalation": True}
             }
         ]
