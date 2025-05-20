@@ -1,8 +1,6 @@
 from buildbot.plugins import util, steps
 
-class MavenCI:
-    MAVEN_TOOLCHAINS_PATH = "/opt/toolchains/toolchains.xml"
-
+class GradleCI:
     def __init__(self, repo_url: str):
         self.repo_url = repo_url
     
@@ -12,27 +10,19 @@ class MavenCI:
         # check out the source
         factory.addStep(steps.Git(name="Git Init", repourl=self.repo_url, mode='incremental'))
 
-        # run maven clean compile
+        # run gradle build without tests
         factory.addStep(
             steps.Compile(
-                name="Maven Clean Compile",
-                command=["mvn", "clean", "compile", "-t", self.MAVEN_TOOLCHAINS_PATH]
+                name="Gradle Clean Build",
+                command=["gradle", "clean", "build", "-x", "test"]
             )
         )
 
-        # run maven test
+        # run gradle test
         factory.addStep(
             steps.Compile(
-                name="Maven Unit Tests",
-                command=["mvn", "test", "-t", self.MAVEN_TOOLCHAINS_PATH]
-            )
-        )
-
-        # run maven package
-        factory.addStep(
-            steps.Compile(
-                name="Maven Generate Artifact",
-                command=["mvn", "package", "-t", self.MAVEN_TOOLCHAINS_PATH]
+                name="Gradle Tests",
+                command=["gradle", "test"]
             )
         )
 
