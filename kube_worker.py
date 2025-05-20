@@ -6,7 +6,7 @@ class KubeCustomWorker(KubeLatentWorker):
         return [
             {
                 "name": "docker-socket",
-                "mountPath": "/var/run",
+                "mountPath": "/var/run"
             }
         ]
 
@@ -23,7 +23,7 @@ class KubeCustomWorker(KubeLatentWorker):
             {
                 "name": "docker-dind",
                 "image": "docker:28.1-dind",
-                "args": ["--ip6tables=false"]
-                "volumeMounts": (yield self.get_build_container_volume_mounts(build)),
+                "args": ["--ip6tables=false"],
+                "volumeMounts": (yield self.get_build_container_volume_mounts(build))
             }
         ]
