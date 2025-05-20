@@ -1,3 +1,5 @@
+from buildbot.plugins.worker import KubeLatentWorker
+
 class KubeCustomWorker(KubeLatentWorker):
     def createEnvironment(self, props):
         super().createEnvironment(props)
